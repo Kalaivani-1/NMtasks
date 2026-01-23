@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-cicd-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: devops-cicd
+  template:
+    metadata:
+      labels:
+        app: devops-cicd
+    spec:
+      containers:
+      - name: devops-container
+        image: devops-cicd-app:latest
+        ports:
+        - containerPort: 3000

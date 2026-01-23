@@ -1,0 +1,12 @@
+{
+  "name": "devops-cicd-app",
+  "version": "1.0.0",
+  "description": "Automated Deployment During High Traffic Events",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DevOps CI/CD Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        header {
+            background-color: #1f2933;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .success { color: green; font-weight: bold; }
+        .warning { color: orange; font-weight: bold; }
+        .danger  { color: red; font-weight: bold; }
+
+        .number {
+            font-size: 28px;
+            margin-top: 10px;
+        }
+
+        footer {
+            background-color: #1f2933;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Automated Deployment Dashboard</h1>
+    <p>Live Traffic Monitoring</p>
+</header>
+
+<section class="cards">
+    <div class="card">
+        <h2>Build Status</h2>
+        <p class="success">RUNNING</p>
+    </div>
+
+    <div class="card">
+        <h2>Kubernetes Pods</h2>
+        <p id="pods" class="success number">2</p>
+    </div>
+
+    <div class="card">
+        <h2>Live Traffic (req/sec)</h2>
+        <p id="traffic" class="number">0</p>
+        <p id="trafficStatus">Normal</p>
+    </div>
+</section>
+
+<footer>
+    <p>DevOps Internship Program EBPL-2026</p>
+</footer>
+
+<script>
+    let traffic = 0;
+    let pods = 2;
+
+    function updateTraffic() {
+        // random traffic spike
+        traffic = Math.floor(Math.random() * 300);
+
+        const trafficEl = document.getElementById("traffic");
+        const statusEl = document.getElementById("trafficStatus");
+        const podsEl = document.getElementById("pods");
+
+        trafficEl.innerText = traffic;
+
+        if (traffic < 100) {
+            statusEl.innerHTML = "<span class='success'>Normal Traffic</span>";
+        } 
+        else if (traffic < 200) {
+            statusEl.innerHTML = "<span class='warning'>Medium Traffic</span>";
+        } 
+        else {
+            statusEl.innerHTML = "<span class='danger'>High Traffic</span>";
+
+            // Auto scaling simulation
+            pods = Math.min(pods + 1, 5);
+            podsEl.innerText = pods;
+        }
+    }
+
+    // Update traffic every second (LIVE)
+    setInterval(updateTraffic, 1000);
+</script>
+
+</body>
+</html>
