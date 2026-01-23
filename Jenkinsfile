@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-username/automated-deployment-high-traffic'
+                git 'https://github.com/Kalaivani-1/NMtasks'
             }
         }
 
@@ -47,3 +47,4 @@ pipeline {
         }
     }
 }
+
