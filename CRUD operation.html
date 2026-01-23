@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Name Email CRUD</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .container {
+            width: 500px;
+            margin: 30px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .action-btn {
+            margin: 0 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .edit {
+            background: orange;
+            color: white;
+        }
+
+        .delete {
+            background: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Name & Email CRUD</h2>
+
+    <form id="userForm">
+        <input type="hidden" id="editIndex">
+
+        <label>Name</label>
+        <input type="text" id="name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script>
+    let users = [];
+
+    const form = document.getElementById("userForm");
+    const tableBody = document.getElementById("tableBody");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const editIndex = document.getElementById("editIndex").value;
+
+        if (editIndex === "") {
+            // ADD
+            users.push({ name, email });
+        } else {
+            // UPDATE
+            users[editIndex] = { name, email };
+            document.getElementById("editIndex").value = "";
+        }
+
+        form.reset();
+        displayUsers();
+    });
+
+    function displayUsers() {
+        tableBody.innerHTML = "";
+
+        users.forEach((user, index) => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>
+                        <button class="action-btn edit" onclick="editUser(${index})">Edit</button>
+                        <button class="action-btn delete" onclick="deleteUser(${index})">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function editUser(index) {
+        document.getElementById("name").value = users[index].name;
+        document.getElementById("email").value = users[index].email;
+        document.getElementById("editIndex").value = index;
+    }
+
+    function deleteUser(index) {
+        if (confirm("Delete this record?")) {
+            users.splice(index, 1);
+            displayUsers();
+        }
+    }
+</script>
+
+</body>
+</html>

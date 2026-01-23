@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event Demo with CSS</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  input, select, button {
+    padding: 5px;
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  select {
+    color: #fff;
+    border: 1px solid #000;
+  }
+
+  #clickBtn {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  #scrollBox {
+    width: 300px;
+    height: 100px;
+    overflow: scroll;
+    border: 1px solid #000;
+    margin-bottom: 20px;
+  }
+
+  #scrollContent {
+    height: 300px;
+    background: linear-gradient(to bottom, #f0f0f0, #ccc);
+  }
+
+  #output {
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #000;
+    background-color: #eee;
+  }
+</style>
+</head>
+<body>
+
+<h2>Event Demo with CSS</h2>
+
+<form id="myForm">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name"><br><br>
+
+  <label for="color">Favorite Color:</label>
+  <select id="color" name="color">
+    <option value="">Select</option>
+    <option value="Red">Red</option>
+    <option value="Blue">Blue</option>
+    <option value="Green">Green</option>
+  </select><br><br>
+
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+</form>
+
+<button id="clickBtn">Click Me</button>
+
+<div id="scrollBox">
+  <div id="scrollContent">Scroll inside me to trigger scroll event.</div>
+</div>
+
+<p id="output">Event output will appear here.</p>
+
+<script>
+  const output = document.getElementById('output');
+  const form = document.getElementById('myForm');
+  const nameInput = document.getElementById('name');
+  const colorSelect = document.getElementById('color');
+  const clickBtn = document.getElementById('clickBtn');
+  const scrollBox = document.getElementById('scrollBox');
+
+  // Form submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    output.innerText = 'Form Submitted!';
+  });
+
+  // Form reset
+  form.addEventListener('reset', () => {
+    output.innerText = 'Form Reset!';
+    colorSelect.style.backgroundColor = '#fff'; // reset select color
+  });
+
+  // Input focus and blur
+  nameInput.addEventListener('focus', () => {
+    output.innerText = 'Input Focused!';
+  });
+
+  nameInput.addEventListener('blur', () => {
+    output.innerText = 'Input Lost Focus!';
+  });
+
+  // Input typing
+  nameInput.addEventListener('input', () => {
+    output.innerText = 'Typing: ' + nameInput.value;
+  });
+
+  // Change event for select + change background
+  colorSelect.addEventListener('change', () => {
+    const selectedColor = colorSelect.value;
+    colorSelect.style.backgroundColor = selectedColor.toLowerCase() || '#fff';
+    output.innerText = 'Color Selected: ' + selectedColor;
+  });
+
+  // Click event
+  clickBtn.addEventListener('click', () => {
+    output.innerText = 'Button Clicked!';
+  });
+
+  // Mouse events
+  clickBtn.addEventListener('mouseover', () => {
+    output.innerText = 'Mouse Over Button!';
+  });
+
+  clickBtn.addEventListener('mouseout', () => {
+    output.innerText = 'Mouse Out of Button!';
+  });
+
+  // Scroll event
+  scrollBox.addEventListener('scroll', () => {
+    output.innerText = 'Scrolling...';
+  });
+
+  // Keyup event
+  nameInput.addEventListener('keyup', (e) => {
+    output.innerText = 'Key Pressed: ' + e.key;
+  });
+</script>
+
+</body>
+</html>
